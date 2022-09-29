@@ -10,9 +10,6 @@ export const scenesProprty = new Scenes.BaseScene<MyContext>("scenesProprty");
 
 scenesProprty.enter(async (ctx) => {
 
-  console.log("scenesProprty ctx.user: ", ctx.user);
-
-
   if (!ctx.user) return ctx.scene.leave();
 
   const id = ctx.user.categoryId;
@@ -35,10 +32,6 @@ scenesProprty.enter(async (ctx) => {
 
   }
 
-  console.log("proprtyIndex: ", proprtyIndex);
-
-  console.log("scenesProprty proprties: ", proprties[1]);
-
   const msg = `<b>${proprties[proprtyIndex].field[ctx.user.lang]}</b> \n\n<b>${proprties[proprtyIndex].description[ctx.user.lang]}</b>`;
 
   ctx.reply(msg, { parse_mode: "HTML" });
@@ -48,7 +41,6 @@ scenesProprty.enter(async (ctx) => {
   return ctx.scene.reenter();
 
 });
-
 
 scenesProprty.leave(async (ctx) => {
   return await replyKeyboard(ctx, message.category[ctx.lang], keyboard.category[ctx.lang]);

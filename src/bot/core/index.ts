@@ -26,6 +26,9 @@ async function startBot(instance) {
 
         ctx.user = user;
 
+        console.log("middleware user: ", user);
+
+
         if (user.lang) ctx.lang = user.lang;
 
         next();
