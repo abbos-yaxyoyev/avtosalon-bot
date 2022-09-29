@@ -1,0 +1,53 @@
+{
+  "name": "tgbot",
+  "version": "1.0.0",
+  "description": "resume uchun",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "scp -i BOT.pem -r dist package.json .env ubuntu@3.249.217.178:/sendMessageBothero",
+    "start": "node ./dist/bot/server.js",
+    "dev": "nodemon --exec ts-node -- --files ./src/bot/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier 'src/**/*.ts'",
+    "prettier:fix": "prettier --write 'src/**/*.ts'",
+    "lint": "eslint src/**/*.ts",
+    "format": "eslint src/**/*.ts --fix"
+  },
+  "dependencies": {
+    "@typegoose/typegoose": "^9.12.0",
+    "axios": "^0.21.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.1",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.20.2",
+    "fastify-cors": "^6.0.2",
+    "fastify-file-upload-await": "0.0.1",
+    "fastify-jwt": "^3.0.1",
+    "fastify-plugin": "^3.0.0",
+    "fastify-static": "^4.2.3",
+    "mongoose": "^6.1.3",
+    "node-fetch": "^3.2.3",
+    "reflect-metadata": "^0.1.13",
+    "telegraf": "^4.7.0",
+    "telegraf-session-redis": "^5.1.0",
+    "ts-node": "^10.9.1",
+    "tslog": "^3.3.4",
+    "typescript": "^4.5.2",
+    "yarn": "^1.22.18"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.45",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.5.1"
+  },
+  "keywords": [
+    "telegraf",
+    "bot"
+  ],
+  "author": "Abbos",
+  "license": "ISC"
+}
