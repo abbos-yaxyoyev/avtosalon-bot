@@ -10,7 +10,8 @@ export interface MyWizardSession extends Scenes.WizardSessionData {
 }
 
 interface MySession extends Scenes.WizardSession<MyWizardSession> {
-
+  photos: string[];
+  media_group_id: string;
 }
 
 

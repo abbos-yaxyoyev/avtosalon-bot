@@ -1,13 +1,38 @@
 export const keyboard = {
-  main_menu: [['🌟 Saralanganlar', '📜 Post yasash']],
+
   language: [
     [
-      { text: 'uz', callback_data: "uz" },
-      { text: 'ru', callback_data: "ru" }
+      { text: `🇺🇿 O'zbek`, },
+      { text: `🇷🇺 Русский`, }
     ]
   ],
-  category: {
-    uz: [['📋 kategory', '⬅️ ortga']],
-    ru: [['📋 категория', '⬅️ назад']],
-  }
+
+  backToLanguage: {
+    uz: ['⬅️ Ortga'],
+    ru: ['⬅️ Hазад'],
+  },
+
+  successPostBackResetPhoto: {
+    uz: [['✅ Post tayyor', '⏮ Ortga'], ['🔄 Rasmni qaytadan yuborish']],
+    ru: [['✅ Пост готов', '⏮ Назад'], ['🔄 Отправить изображение еще раз']]
+  },
+
+  progressSetProprty: {
+    uz: [['🔙 Ortga']],
+    ru: [['🔙 Назад']]
+  },
+
+  backToCategoryMenu: {
+    uz: [['⏮ Ortga']],
+    ru: [['⏮ Назад']]
+  },
+
+  channelLink: [
+    [
+      { text: 'Telegram', url: "https://t.me/TashAvtoLiderAdmin" },
+      { text: 'Start', callback_data: 'start' }
+    ]
+  ]
+
+
 }

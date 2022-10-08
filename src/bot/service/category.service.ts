@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 import { CommonException } from '../../common/constant/exceptions';
 import { Category } from '../../common/db/models/category/category.model';
 import { PagingDto } from '../../common/validation/dto/paging.dto';
+import { MyContext } from '../core/context';
+import { keyboard } from '../keyboard';
 import { DBService } from './db.service/db.service';
 
 export class CategoryService extends DBService<Category> {
@@ -33,10 +35,9 @@ export class CategoryService extends DBService<Category> {
 
   }
 
-  public async findByIdError(id, options?, projection?) {
-    const user = await this.findById(id, options, projection);
-    if (!user) throw CommonException.NotFound(id);
-    return user;
+  public async findCategoryById(id, options?, projection?) {
+    const category = await this.findById(id, options, projection);
+    return category;
   }
 
   public async getPaging(dto: PagingDto) {
@@ -129,37 +130,89 @@ export class CategoryService extends DBService<Category> {
 
   }
 
-  public async categoryPaging() {
+  public async findCategoryByName(name: string, lang: string) {
 
-    const $match = {
-      $match: {
+    let query: any
+
+    if (lang == 'uz') {
+      query = {
         isDeleted: false,
-        isAvailable: true
+        isAvailable: true,
+        'name.uz': name
+      }
+    } else {
+      query = {
+        isDeleted: false,
+        isAvailable: true,
+        'name.ru': name
       }
     }
 
-    const $projection = {
-      $project: {
-        _id: 1,
-        id: 1,
-        name: 1,
-        parentId: 1,
-        maxImgAllowed: 1,
-        isAvailable: 1,
-        tags: 1,
-        proprties: 1
-      }
+    const projection = {
+      _id: 1,
+      id: 1,
+      name: 1,
+      parentId: 1,
+      maxImgAllowed: 1,
+      isAvailable: 1,
+      tags: 1,
+      proprties: 1
     }
 
-    const $pipeline = [
-      $match,
-      $projection,
-    ]
+    return await this.findOne(query, {}, projection);
 
-    const result = await this.aggregate($pipeline);
+  }
 
-    return result;
+  public async findManyCategory() {
 
+    const query = {
+      isDeleted: false,
+      isAvailable: true
+    }
+
+    const projection = {
+      _id: 1,
+      id: 1,
+      name: 1,
+      parentId: 1,
+      maxImgAllowed: 1,
+      isAvailable: 1,
+      tags: 1,
+      proprties: 1
+    }
+
+    return await this.find(query, {}, projection);
+
+  }
+
+  public async makeCategoryMenu(ctx: MyContext) {
+
+    const categories = await this.findManyCategory();
+
+    let keyboards = [];
+
+    let column = [];
+
+    for (let i = 0; i < categories.length; i++) {
+
+      if (column.length == 2) {
+
+        keyboards.push(column);
+
+        column = [];
+      }
+
+      column.push('📋 ' + categories[i].name[ctx.user.lang]);
+
+      if (i + 1 == categories.length && categories.length % 2 == 1) {
+        keyboards.push(column);
+      }
+
+    }
+
+    keyboards.push(keyboard.backToLanguage[ctx.user.lang]);
+
+    return keyboards;
   }
 
 }

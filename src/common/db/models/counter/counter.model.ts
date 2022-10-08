@@ -10,13 +10,13 @@ import { COLLECTIONS } from "../../../constant/collections";
 
 export class Counter {
   @prop({ required: true })
-  name: string; //* name:'order'
+  name: string;
   @prop({})
-  value: number;//* value:i++
+  value: number;
   public static async getValue(name) {
     const counter = await CounterModel.findOne({ name });
     if (!counter) {
-      await CounterModel.findOneAndUpdate({ name }, { value: 10000 }, { new: true, upsert: true })
+      await CounterModel.findOneAndUpdate({ name }, { value: 100 }, { new: true, upsert: true })
     }
     const result = await CounterModel.findOneAndUpdate({ name }, { $inc: { value: 1 } }, { new: true, upsert: true })
     return result?.value

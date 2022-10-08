@@ -5,18 +5,38 @@ export class HearsController {
   constructor(private readonly hearsService: HearsService) { }
 
   /* --- Choose language --- */
-  language(ctx: MyContext) {
-    return this.hearsService.language(ctx);
+  choosenLanguage(ctx: MyContext) {
+    return this.hearsService.choosenLanguage(ctx);
   }
 
-  /* --- category menu --- */
-  category(ctx: MyContext) {
-    return this.hearsService.category(ctx);
+  /* --- Category menu --- */
+  choosenCategory(ctx: MyContext) {
+    return this.hearsService.choosenCategory(ctx);
   }
 
-  /* --- back language menu --- */
+  /* --- Back language menu --- */
   backTolanguageMenu(ctx: MyContext) {
     return this.hearsService.backTolanguageMenu(ctx);
+  }
+
+  /* --- Success Post --- */
+  successPost(ctx: MyContext) {
+    return this.hearsService.successPost(ctx)
+  }
+
+  /* --- ⏮ back to category menu --- */
+  backToCategoryMenu(ctx: MyContext) {
+    return this.hearsService.backToCategoryMenu(ctx)
+  }
+
+  /* --- Resend Photos --- */
+  resendPhotos(ctx: MyContext) {
+    return this.hearsService.resendPhotos(ctx);
+  }
+
+  /* --- back before proprty --- */
+  backToPrevProprty(ctx: MyContext) {
+    return this.hearsService.backToPrevProprty(ctx)
   }
 
 }

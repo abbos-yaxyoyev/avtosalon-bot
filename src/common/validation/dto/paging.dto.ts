@@ -97,5 +97,5 @@ export class PagingDto extends BaseDto {
   }, {
     groups: [BaseDtoGroup.CREATE, BaseDtoGroup.UPDATE],
   })
-  tags: string[];
+  tags?: string[];
 }

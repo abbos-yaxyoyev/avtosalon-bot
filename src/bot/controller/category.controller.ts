@@ -2,62 +2,49 @@ import { BaseDtoGroup } from "../../common/validation/base.dto";
 import { CategoryDto } from "../../common/validation/dto/category.dto";
 import { PagingDto } from "../../common/validation/dto/paging.dto";
 import { validateIt } from "../../common/validation/validate";
-import { CategoryService } from "../service/category.service";
-import { categoryService } from './../core/singletons';
+import { categoryService } from "../core/singletons";
+
+
 
 export async function createCategory(request, reply) {
+
   const data = await validateIt(request.body, CategoryDto, [BaseDtoGroup.CREATE]);
 
-  console.log("this.categoryService: ", this.categoryService);
+  console.log("categoryService: ", categoryService);
 
   const result = await categoryService.createCategory(data);
 
   return reply.success(result);
+
 }
 
-export class CategoryController {
-  constructor(private categoryService: CategoryService) {
-  }
+export async function updateCategory(request, reply) {
 
-  async create(request, reply) {
+  console.log("category: ", await categoryService);
 
-    const data = await validateIt(request.body, CategoryDto, [BaseDtoGroup.CREATE]);
+  const data = await validateIt(request.body, CategoryDto, [BaseDtoGroup.UPDATE]);
 
-    console.log("this.categoryService: ", this.categoryService);
+  const result = await categoryService.updateCategory(data._id, data);
 
-    const result = await this.categoryService.createCategory(data);
+  return reply.success(result);
+}
 
-    return reply.success(result);
+export async function deleteCategory(request, reply) {
 
-  }
+  const data = await validateIt(request.params, CategoryDto, [BaseDtoGroup.DELETE]);
 
-  async updateCategory(request, reply) {
+  const result = await categoryService.deleteCategory(data._id);
 
-    const data = await validateIt(request.body, CategoryDto, [BaseDtoGroup.UPDATE]);
+  return reply.success(result);
 
-    const result = await this.categoryService.updateCategory(data._id, data);
+}
 
-    return reply.success(result);
-  }
+export async function categoryPaging(request, reply) {
 
-  async deleteCategory(request, reply) {
+  const data = await validateIt(request.params, PagingDto, [BaseDtoGroup.PAGENATION]);
 
-    const data = await validateIt(request.params, CategoryDto, [BaseDtoGroup.DELETE]);
+  const result = await categoryService.getPaging(data);
 
-    const result = await this.categoryService.deleteCategory(data._id);
-
-    return reply.success(result);
-
-  }
-
-  async getCategoryPaging(request, reply) {
-
-    const data = await validateIt(request.params, PagingDto, [BaseDtoGroup.PAGENATION]);
-
-    const result = await this.categoryService.getPaging(data);
-
-    return reply.success(result);
-
-  }
+  return reply.success(result);
 
 }

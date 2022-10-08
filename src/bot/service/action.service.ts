@@ -1,17 +1,19 @@
+import { replyKeyboard } from '../../common/keyboard/keybord';
 import { MyContext } from '../core/context';
+import { keyboard } from '../keyboard';
+import { message } from '../message';
 export class ActionService {
-  // constructor(
-  // ) {
 
-  // }
+  async start(ctx: MyContext) {
 
-  async proprty(ctx: MyContext) {
-
-    console.log("context action callbackQuery: ", ctx.callbackQuery);
-
-    ctx.user.categoryId = ctx.callbackQuery.data.split('__')[1];
-
-    return await ctx.scene.enter('scenesProprty');
+    return replyKeyboard(
+      ctx,
+      message.commandStart,
+      keyboard.language,
+      {
+        parse_mode: "HTML"
+      }
+    )
 
   }
 

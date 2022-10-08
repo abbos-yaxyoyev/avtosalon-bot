@@ -1,25 +1,24 @@
-import { createCategory } from '../../controller/category.controller';
-import { categoryController } from './../../core/singletons';
+import { categoryPaging, createCategory, deleteCategory, updateCategory } from '../../controller/category.controller';
 
 export const categoryRoutes = [
   {
     method: 'POST',
     url: `/category`,
-    handler: createCategory
+    handler: createCategory,
   },
   {
     method: 'PUT',
     url: `/category`,
-    handler: categoryController.updateCategory,
+    handler: updateCategory,
   },
   {
     method: 'GET',
     url: `/category`,
-    handler: categoryController.getCategoryPaging,
+    handler: categoryPaging,
   },
   {
     method: 'DELETE',
     url: `/category/:_id`,
-    handler: categoryController.deleteCategory,
+    handler: deleteCategory,
   }
 ];

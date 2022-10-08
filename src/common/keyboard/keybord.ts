@@ -4,7 +4,7 @@ import { ExtraReplyMessage } from 'telegraf/typings/telegram-types';
 import { MyContext } from '../../bot/core/context';
 
 //! keybord
-export async function replyKeyboard(ctx: MyContext, message: string, keyboards = [], options: any = null) {
+export async function replyKeyboard(ctx: MyContext, message: string, keyboards = [], options: ExtraReplyMessage = null) {
     ctx.reply(
         message,
         {
@@ -22,15 +22,19 @@ export async function replyMessageWithInlineKeyboard(
     ctx: MyContext,
     message: string,
     keyboards = [],
-    options: ExtraReplyMessage = {}
+    options: ExtraReplyMessage = {},
+    remove_keyboard: boolean = false
 ) {
 
     if (keyboards.length) {
+
         options.reply_markup = {
-            resize_keyboard: true,
-            inline_keyboard: keyboards
+            inline_keyboard: keyboards,
         }
+
     }
+
+    console.log('options: ', options);
 
     for (const key in options) {
         if (!options[key]) {
@@ -38,7 +42,12 @@ export async function replyMessageWithInlineKeyboard(
         }
     }
 
-    await ctx.reply(message, options);
+    if (remove_keyboard) {
+        const deleteMessage = await ctx.reply('remove keyboard', { reply_markup: { remove_keyboard: true } });
+        ctx.deleteMessage(deleteMessage.message_id)
+    }
+
+    return await ctx.reply(message, options);
 
 }
 

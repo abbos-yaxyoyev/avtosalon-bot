@@ -14,6 +14,10 @@ export interface UserInterface {
 
   username?: string
 
+  isPostAdmin: boolean;
+
+  isEmployee: boolean;
+
   isDeleted?: boolean;
 
   lang: string;
@@ -22,6 +26,10 @@ export interface UserInterface {
 
   proprtyIndex: number;
 
-  scenesWizard: string;
+  status: string;
+
+  postId: any;
+
+  isNextProprty: boolean;
 
 }

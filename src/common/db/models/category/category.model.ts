@@ -41,8 +41,11 @@ class Proprty {
 
 @index(
   {
-    name: 1,
-    parentId: 1
+    tags: 1,
+    isDeleted: 1,
+    parentId: 1,
+    proprties: 1,
+    createdBy: 1,
   },
   {
     name: 'name&parentId',
@@ -53,11 +56,6 @@ class Proprty {
 @index(
   {
     name: 1,
-    tags: 1,
-    isDeleted: 1,
-    parentId: 1,
-    proprties: 1,
-    createdBy: 1,
   },
   {
     unique: true,

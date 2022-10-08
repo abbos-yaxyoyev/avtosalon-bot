@@ -5,7 +5,7 @@ export class ActionController {
 
   constructor(private readonly actionService: ActionService) { }
 
-  proprty(ctx: MyContext) {
-    return this.actionService.proprty(ctx);
+  start(ctx: MyContext) {
+    return this.actionService.start(ctx);
   }
 }

@@ -6,12 +6,15 @@ import { User } from '../user/user.model';
 
 
 export enum Status {
-  process = "process",
-  finish = "finish",
+  proprty = "proprty",
+  photo = "photo",
 }
 
 
 export class ProprtyValue {
+
+  /* --- kerakli --- */
+  _id?: any;
 
   @prop({ trim: true })
   field: string;
@@ -33,14 +36,38 @@ export class ProprtyValue {
 
 @index(
   {
-    createdBy: 1,
     userTgId: 1,
     categoryId: 1,
-    isDeleted: 1
+    status: 1,
+    isDeleted: 1,
+    hashTag: 1
   },
   {
     background: true,
-    name: 'categoryId&isDeleted',
+    name: 'categoryId&isDeleted&status&userTgId',
+  },
+)
+
+@index(
+  {
+    status: 1,
+    id: 1,
+  },
+  {
+    name: 'status&id',
+    background: true,
+  },
+)
+
+@index(
+  {
+    id: 1,
+    hashTag: 1,
+  },
+  {
+    unique: true,
+    background: true,
+    name: 'hashTag&id',
   },
 )
 
@@ -57,20 +84,29 @@ export class Post {
   @prop({ type: Types.ObjectId, ref: COLLECTIONS.CATEGORY })
   categoryId: Ref<Category>;
 
-  @prop({ required: true, })
-  public date: number;
-
-  @prop({ type: [ProprtyValue] })
+  @prop({ default: [], type: [ProprtyValue] })
   public proprties: ProprtyValue[];
 
-  @prop({})
+  @prop({ default: false })
   public isDeleted: boolean;
 
   @prop({ default: false })
   public isAvailable: boolean;
 
-  @prop({ enum: Status })
+  @prop({ enum: Status, default: "proprty" })
   public status: Status;
+
+  @prop({ default: [], type: [String] })
+  public photos: string[];
+
+  @prop({ default: 0, })
+  public imgCount: number;
+
+  @prop({ trim: true, default: null })
+  public postBody: string;
+
+  @prop({})
+  public hashTag: string;
 
 }
 

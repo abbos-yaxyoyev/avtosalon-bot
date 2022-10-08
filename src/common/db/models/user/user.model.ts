@@ -1,5 +1,7 @@
-import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoose';
+import { getModelForClass, index, modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { Types } from 'mongoose';
 import { COLLECTIONS } from '../../../constant/collections';
+import { Post } from '../post/post.model';
 
 @modelOptions({
   schemaOptions: {
@@ -51,6 +53,8 @@ export class User {
   @prop({ default: false })
   public isEmployee: boolean;
 
+  @prop({ default: false })
+  public isPostAdmin: boolean;
 
   /* --- category proprty --- */
   /* --- use scenes withard --- */
@@ -62,7 +66,13 @@ export class User {
   categoryId: string;
 
   @prop({ default: null })
-  scenesWizard: string;
+  status: string;
+
+  @prop({ type: Types.ObjectId, ref: COLLECTIONS.POST })
+  postId: Ref<Post>
+
+  @prop({ default: null })
+  isNextProprty: boolean;
 
 }
 

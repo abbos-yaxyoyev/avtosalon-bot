@@ -63,6 +63,8 @@ export interface CategoryInterface {
 
 interface ProprtyValueInterface {
 
+  _id?: any,
+
   field: string;
 
   position?: number;
@@ -73,13 +75,13 @@ interface ProprtyValueInterface {
 
 export interface PostInterface {
 
-  createdBy?: Types.ObjectId;
+  _id?: any;
+
+  createdBy?: any;
 
   userTgId: number;
 
-  categoryId: Types.ObjectId;
-
-  date: number;
+  categoryId: any;
 
   proprties: ProprtyValueInterface[];
 
@@ -88,5 +90,11 @@ export interface PostInterface {
   isAvailable: boolean;
 
   status: string;
+
+  photos: string[];
+
+  postBody: string;
+
+  hashTag: string;
 
 }

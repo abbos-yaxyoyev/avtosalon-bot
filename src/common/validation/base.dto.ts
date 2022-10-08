@@ -12,7 +12,7 @@ export class BaseDtoGroup {
 }
 
 export class BaseDto {
-  @IsOptional({ groups: [BaseDtoGroup.CREATE] })
+  @IsOptional({ groups: [BaseDtoGroup.CREATE, BaseDtoGroup.PAGENATION] })
   @IsNumber(
     {
       allowInfinity: false,
@@ -20,7 +20,7 @@ export class BaseDto {
     },
     { groups: [BaseDtoGroup.CREATE] },
   )
-  id: number;
+  id?: number;
 
   @IsOptional({ groups: [BaseDtoGroup.PAGENATION] })
   @IsMongoId({
@@ -31,10 +31,10 @@ export class BaseDto {
       BaseDtoGroup.PAGENATION,
     ],
   })
-  _id: string;
+  _id?: string;
 
   @IsOptional({ groups: [BaseDtoGroup.CREATE] })
-  createdBy: string;
+  createdBy?: string;
 }
 
 export class GetPagingDto { }

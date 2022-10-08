@@ -8,9 +8,10 @@ dotenv.config({
 
 export const ENV = {
   DB_URL: process.env.DB_URL || `mongodb://localhost:27017/AvtoSalon?directConnection=true`,
-  TELEGRAF_TOKEN: process.env.TELEGRAF_TOKEN || "5466144439:AAEFtxPVCzALuqUOogIlsbR9oRekrW67GyM",
   WEB_HOOK_URL: process.env.WEB_HOOK_URL || "https://makepostbot.herokuapp.com",
+  TELEGRAF_TOKEN: process.env.TELEGRAF_TOKEN,
   HOST: process.env.HOST || '0.0.0.0',
+  CHANNEL_ID: process.env.CHANNEL_ID,
   PORT: process.env.PORT || 3000,
 };
 
