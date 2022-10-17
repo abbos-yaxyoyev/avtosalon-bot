@@ -1,5 +1,5 @@
 import { ModelType } from '@typegoose/typegoose/lib/types';
-import { Types } from 'mongoose';
+import { QueryOptions, Types } from 'mongoose';
 import { CommonException } from '../../common/constant/exceptions';
 import { Post } from '../../common/db/models/post/post.model';
 import { PagingDto } from '../../common/validation/dto/paging.dto';
@@ -132,6 +132,10 @@ export class PostService extends DBService<Post> {
 
   public async findOnePost(query: any, options?, projection?) {
     return await this.findOne(query, options, projection);
+  }
+
+  public async findPostAndUpdate(query: any, data: any, options?: QueryOptions<unknown>) {
+    return await this.findOneAndUpdate(query, data, options);
   }
 
 

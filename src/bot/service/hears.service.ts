@@ -1,6 +1,7 @@
 import { replyKeyboard } from '../../common/keyboard/keybord';
 import { MyContext } from '../core/context';
 import { message } from '../message';
+import { sendCompletedPost } from '../scenes/proprty';
 import { sendMessageToChannel } from '../sendMessageToChannel/senMessageToChannel';
 import { ENV } from './../../common/config/config';
 import { categoryService, postService, userService } from './../core/singletons';
@@ -80,15 +81,19 @@ export class HearsService {
 
   async successPost(ctx: MyContext) {
 
+    console.log("ctx.session.photos: ", ctx.session.photos);
+
+    const post = await postService.findOnePost({ isDeleted: false, _id: ctx.user.postId });
+
     ctx.session.photos = [];
 
     ctx.user.status = null;
 
+    console.log("post: ", post);
+
+    await sendMessageToChannel(ENV.CHANNEL_ID, post.photos, post.postBody);
+
     await userService.updateByTgId(ctx.from.id, { status: null, categoryId: null });
-
-    const post = await postService.findOne({ isDeleted: false, _id: ctx.user.postId })
-
-    await sendMessageToChannel(ENV.CHANNEL_ID, post.photos, post.postBody)
 
     const categoriesMenuKeyboard = await categoryService.makeCategoryMenu(ctx);
 
@@ -98,6 +103,23 @@ export class HearsService {
       categoriesMenuKeyboard,
       { parse_mode: "HTML", }
     );
+
+  }
+
+  async complitedPost(ctx: MyContext) {
+
+    if (!ctx.session.photos || ctx.session.photos?.length == 0) {
+      return ctx.reply(message.minLimitPhoto[ctx.user.lang]);
+    }
+
+    const post = await postService.findPostAndUpdate(
+      { isDeleted: false, _id: ctx.user.postId },
+      { photos: ctx.session.photos }
+    );
+
+    await sendCompletedPost(ctx, ctx.session.photos, post);
+
+    return replyKeyboard(ctx, message.complitedPostWiev[ctx.user.lang], keyboard.successPostBackResetPhoto[ctx.user.lang]);
 
   }
 
@@ -119,9 +141,13 @@ export class HearsService {
 
     ctx.session.media_group_id = null;
 
-    await userService.updateByTgId(ctx.from.id, { status: "photo", photos: null });
+    await userService.updateByTgId(ctx.from.id, { status: "photo", });
 
-    return ctx.reply(message.resendPhoto[ctx.lang]);
+    return replyKeyboard(
+      ctx,
+      message.resendPhoto[ctx.lang],
+      keyboard.backToCategoryMenuOrComplitedPost[ctx.user.lang]
+    )
 
   }
 
@@ -141,8 +167,6 @@ export class HearsService {
 
     post.proprties.pop();
 
-    console.log("post.proprties1: ", post.proprties);
-
     await postService.updatePost(ctx.user.postId.toString(), { proprties: post.proprties });
 
     const category = (await categoryService.getCategoryById(ctx.user.categoryId)).shift();
@@ -154,7 +178,6 @@ export class HearsService {
     /* ---  ---  --- Check prev or next ---  ---  --- */
     if (ctx.user.isNextProprty) {
       ctx.user.proprtyIndex -= 1;
-      console.log("post.proprties2: ", post.proprties);
       await postService.updatePost(ctx.user.postId.toString(), { proprties: post.proprties });
       await userService.updateByTgId(ctx.from.id, { $inc: { proprtyIndex: -1 }, isNextProprty: false });
     }

@@ -52,7 +52,7 @@ scenesProprty.enter(async (ctx: MyContext) => {
     return replyKeyboard(
       ctx,
       message.photoLimit(ctx, category.maxImgAllowed),
-      keyboard.backToCategoryMenu[ctx.user.lang]
+      keyboard.backToCategoryMenuOrComplitedPost[ctx.user.lang]
     )
   }
 
@@ -105,7 +105,7 @@ scenesPhoto.enter(async (ctx) => {
 
   if (category.maxImgAllowed <= ctx.session.photos.length) {
 
-    const post = await postService.findOne({ isDeleted: false, _id: ctx.user.postId })
+    const post = await postService.findOne({ isDeleted: false, _id: ctx.user.postId });
 
     await sendCompletedPost(ctx, ctx.session.photos, post);
 
@@ -115,7 +115,7 @@ scenesPhoto.enter(async (ctx) => {
 
 })
 
-async function sendCompletedPost(ctx: MyContext, photos: string[], post: PostInterface) {
+export async function sendCompletedPost(ctx: MyContext, photos: string[], post: PostInterface) {
 
   let postBody = '';
 

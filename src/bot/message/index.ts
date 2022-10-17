@@ -64,6 +64,11 @@ export const message = {
   hashTag: {
     uz: "E'lon kodi:  ",
     ru: "Промо-код:  "
+  },
+
+  minLimitPhoto: {
+    uz: `Iltimos e'loningizda kamida bitta rasm bo'lishi kerak`,
+    ru: `Включите в объявление хотя бы одно изображение.`
   }
 
 }

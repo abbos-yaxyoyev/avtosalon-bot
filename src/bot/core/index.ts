@@ -65,6 +65,7 @@ async function startBot(instance) {
     bot.hears(/^(🇺🇿|🇷🇺)\s.+/, ctx => herasController.choosenLanguage(ctx))
       .hears(/^📋\s.+/, (ctx) => herasController.choosenCategory(ctx))
       .hears(/^⬅️\s.+/, (ctx) => herasController.backTolanguageMenu(ctx))
+      .hears(/^☑️\s.+/, (ctx) => herasController.complitedPost(ctx))
       .hears(/^✅\s.+/, (ctx) => herasController.successPost(ctx))
       .hears(/^⏮\s.+/, (ctx) => herasController.backToCategoryMenu(ctx))
       .hears(/^🔄\s.+/, (ctx) => herasController.resendPhotos(ctx))

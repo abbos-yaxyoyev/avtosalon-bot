@@ -19,6 +19,11 @@ export class HearsController {
     return this.hearsService.backTolanguageMenu(ctx);
   }
 
+  /* --- complited post but imgCount less then maxImgAllowedCount --- */
+  complitedPost(ctx: MyContext) {
+    return this.hearsService.complitedPost(ctx)
+  }
+
   /* --- Success Post --- */
   successPost(ctx: MyContext) {
     return this.hearsService.successPost(ctx)

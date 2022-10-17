@@ -22,9 +22,9 @@ export const keyboard = {
     ru: [['🔙 Назад']]
   },
 
-  backToCategoryMenu: {
-    uz: [['⏮ Ortga']],
-    ru: [['⏮ Назад']]
+  backToCategoryMenuOrComplitedPost: {
+    uz: [['☑️ Post tayyor', '⏮ Ortga']],
+    ru: [['☑️ Пост готов', '⏮ Назад']]
   },
 
   channelLink: [
